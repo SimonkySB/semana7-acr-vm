@@ -26,9 +26,8 @@ stages:
                     # Verificar e instalar Azure CLI en la máquina virtual
                     if ! command -v az &> /dev/null; then
                       echo "Azure CLI no está instalado. Instalando Azure CLI..."
-                      export DEBIAN_FRONTEND=noninteractive && \
-                      sudo apt-get update && \
-                      sudo apt-get install -y curl && \
+                      sudo DEBIAN_FRONTEND=noninteractive apt-get update && \
+                      sudo DEBIAN_FRONTEND=noninteractive apt-get install -y curl && \
                       curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash && \
                       az --version
                     else
@@ -41,9 +40,8 @@ stages:
                     # Verificar e instalar Docker en la máquina virtual
                     if ! command -v docker &> /dev/null; then
                       echo "Docker no está instalado. Instalando Docker..."
-                      export DEBIAN_FRONTEND=noninteractive && \
-                      sudo apt-get update && \
-                      sudo apt-get install -y \
+                      sudo DEBIAN_FRONTEND=noninteractive apt-get update && \
+                      sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
                         apt-transport-https \
                         ca-certificates \
                         curl \
@@ -51,9 +49,8 @@ stages:
                         lsb-release && \
                       curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg && \
                       echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && \
-                      export DEBIAN_FRONTEND=noninteractive && \
-                      sudo apt-get update && \
-                      sudo apt-get install -y docker-ce docker-ce-cli containerd.io && \
+                      sudo DEBIAN_FRONTEND=noninteractive apt-get update && \
+                      sudo DEBIAN_FRONTEND=noninteractive apt-get install -y docker-ce docker-ce-cli containerd.io && \
                       sudo systemctl start docker && \
                       sudo systemctl enable docker && \
                       sudo docker --version
